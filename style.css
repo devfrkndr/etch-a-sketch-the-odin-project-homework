@@ -24,3 +24,11 @@
   border: 0.5px solid black;
   background-color: white;
 }
+
+p {
+  text-align: center;
+}
+
+#boxesnumber {
+  width: 250px;
+}

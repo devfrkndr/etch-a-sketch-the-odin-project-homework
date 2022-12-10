@@ -9,14 +9,18 @@ const formChangeBoxes = document.createElement('form');
 const input = document.createElement('input');
 input.type = 'text';
 input.setAttribute('id', 'boxesnumber');
+input.value = 'Enter a number smaller than 100.';
+
+input.addEventListener('click', function () {
+  input.value = '';
+});
 
 const changeBtn = document.createElement('button');
 changeBtn.classList.add = 'changeBtn';
-changeBtn.innerText = 'Change the numbers of the boxes';
+changeBtn.innerText = 'Change';
 changeBtn.type = 'submit';
 
 sketchFragment.appendChild(container);
-// container.appendChild(sketchSection);
 container.appendChild(formChangeBoxes);
 formChangeBoxes.append(input, changeBtn);
 
@@ -48,14 +52,28 @@ function createSketch() {
 
 const sketchSection = createSketch();
 
+let warning;
+
 changeBtn.addEventListener('click', function (event) {
-  boxes = input.value;
+  boxes = Number(input.value);
   const oldSketches = document.querySelectorAll('.sketchSection');
-  oldSketches.forEach((e) => {
-    e.remove();
-  });
-  createSketch();
   event.preventDefault();
+  if (boxes > 100 && warning === undefined) {
+    warning = document.createElement('p');
+    warning.innerText = 'Please put a number smaller than 100!';
+    warning.setAttribute('id', 'alertMessage');
+    formChangeBoxes.appendChild(warning);
+    event.preventDefault();
+  } else if (boxes <= 100) {
+    oldSketches.forEach((e) => {
+      e.remove();
+    });
+    createSketch();
+    if (warning !== undefined) {
+      warning.remove();
+    }
+    event.preventDefault();
+  }
 });
 
 document.body.appendChild(sketchFragment);
