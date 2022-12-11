@@ -26,7 +26,7 @@ formChangeBoxes.append(input, changeBtn);
 
 let boxes = 16;
 
-const total = 720;
+const total = 600;
 
 function createSketch() {
   const sketchSection = document.createElement('div');
@@ -52,26 +52,25 @@ function createSketch() {
 
 const sketchSection = createSketch();
 
-let warning;
+const warning = document.createElement('p');
+warning.innerText = 'Please put a number smaller than 100!';
+warning.setAttribute('id', 'alertMessage');
+formChangeBoxes.appendChild(warning);
+warning.style.visibility = 'hidden';
 
 changeBtn.addEventListener('click', function (event) {
   boxes = Number(input.value);
   const oldSketches = document.querySelectorAll('.sketchSection');
   event.preventDefault();
-  if (boxes > 100 && warning === undefined) {
-    warning = document.createElement('p');
-    warning.innerText = 'Please put a number smaller than 100!';
-    warning.setAttribute('id', 'alertMessage');
-    formChangeBoxes.appendChild(warning);
+  if (boxes > 100) {
+    warning.style.visibility = 'visible';
     event.preventDefault();
   } else if (boxes <= 100) {
     oldSketches.forEach((e) => {
       e.remove();
     });
     createSketch();
-    if (warning !== undefined) {
-      warning.remove();
-    }
+    warning.style.visibility = 'hidden';
     event.preventDefault();
   }
 });
